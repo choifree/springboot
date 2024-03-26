@@ -17,6 +17,6 @@ public class PostController {
 
     @GetMapping("/health")
     public String health() {
-        return "health check post controller";
+        return "** health check post controller **";
     }
 }
