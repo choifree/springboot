@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@CrossOrigin(origins = "*")
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/v1/post")
@@ -20,7 +21,7 @@ public class PostController extends BaseController {
 
     @GetMapping("/getPosts")
     public ResponseEntity<?> getPosts() {
-        return new ResponseEntity<>(postService.getPosts(), null, HttpStatus.OK);
+        return new ResponseEntity<>(postService.getPosts(), HttpStatus.OK);
     }
 
     @GetMapping("/getPostById/{id}")

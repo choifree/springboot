@@ -2,44 +2,49 @@ package com.example.demo.service;
 
 import com.example.demo.dto.RequestPostDto;
 import com.example.demo.dto.ResponseDto;
+import com.example.demo.dto.ResponsePostDto;
+import com.example.demo.dto.ResultDto;
 import com.example.demo.entity.PostEntity;
 import com.example.demo.repository.PostRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
 public class PostService {
     private final PostRepository postRepository;
 
-    public ResponseDto getPosts() {
-        List<PostEntity> postList = postRepository.findAll();
-        HashMap<String, Object> hashMap = new HashMap<>();
-        hashMap.put("postList", postList.isEmpty() ? Collections.emptyList() : postList);
-        ResponseDto dto = ResponseDto
-                .builder()
-                .successOrNot("Y")
-                .data(hashMap)
-                .build();
-        return dto;
+    public ResultDto getPosts() {
+        List<ResponsePostDto> postList = postRepository.findUsingPost("Y")
+                                                            .stream()
+                                                            .map(PostEntity::toResponsePostDto)
+                                                            .collect(Collectors.toList());
+
+        ResultDto result = ResultDto
+                                .builder()
+                                .postList(postList)
+                                .successOrNot("Y")
+                                .build();
+
+        return result;
     }
 
     public ResponseDto getPostById(Long id) {
-        HashMap<String, Object> hashMap = new HashMap<>();
-        hashMap.put("post", postRepository.findById(id));
-        ResponseDto dto = ResponseDto
-                .builder()
-                .successOrNot("Y")
-                .data(hashMap)
-                .build();
-        return dto;
+        HashMap<String, Optional<PostEntity>> resultMap = new HashMap<>();
+        resultMap.put("post", postRepository.findById(id));
+
+        return new ResponseDto(resultMap);
+
     }
 
+    @Transactional
     public ResponseDto writePost(RequestPostDto requestPostDto) {
-        System.out.println("requestPostDto.getTitle()" + requestPostDto.getTitle());
-        System.out.println("requestPostDto.getContent()" + requestPostDto.getContent());
 
         PostEntity entity = PostEntity.builder()
                 .title(requestPostDto.getTitle())
@@ -49,10 +54,6 @@ public class PostService {
                 .build();
 
         postRepository.save(entity);
-        ResponseDto dto = ResponseDto
-                .builder()
-                .successOrNot("Y")
-                .build();
-        return dto;
+        return new ResponseDto<>("null");
     }
 }

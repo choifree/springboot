@@ -1,5 +1,6 @@
 package com.example.demo.entity;
 
+import com.example.demo.dto.ResponsePostDto;
 import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 import lombok.Builder;
@@ -7,15 +8,17 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
-import org.antlr.v4.runtime.misc.NotNull;
+import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.DynamicInsert;
 
-import java.math.BigDecimal;
 import java.util.Date;
+
+@DynamicInsert
 @SuperBuilder
 @NoArgsConstructor
 @Setter
 @Getter
-@Entity
+@Entity(name = "post")
 @Table(name = "post")
 public class PostEntity {
 
@@ -30,9 +33,23 @@ public class PostEntity {
     @Column(nullable = false, columnDefinition = "TEXT")
     private String content;
 
+    @Column(name = "use_yn", columnDefinition = "CHAR")
+    private String useYn;
+
     @Temporal(TemporalType.TIMESTAMP)
     private Date created;
 
     @Temporal(TemporalType.TIMESTAMP)
     private Date modified;
+
+    public ResponsePostDto toResponsePostDto() {
+        return ResponsePostDto.builder()
+                .postId(postId)
+                .title(title)
+                .content(content)
+                .useYn(useYn)
+                .created(created)
+                .modified(modified)
+                .build();
+    }
 }

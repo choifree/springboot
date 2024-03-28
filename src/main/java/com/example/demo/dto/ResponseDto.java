@@ -4,10 +4,13 @@ import lombok.*;
 
 @Getter
 @Setter
-@Builder
-public class ResponseDto {
+public class ResponseDto<T> {
 
     private String successOrNot;
-    private Object data;
+    private T data;
+
+    public ResponseDto (T data) {
+        this.data = data;
+    }
 
 }
