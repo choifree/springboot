@@ -9,9 +9,8 @@ import java.util.List;
 @Builder
 @Getter
 @Setter
-public class ResultDto {
+public class ResultDto<T> {
     private String successOrNot;
     private List<ResponsePostDto> postList;
-
 
 }

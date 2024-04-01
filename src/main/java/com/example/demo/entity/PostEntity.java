@@ -1,23 +1,20 @@
 package com.example.demo.entity;
 
 import com.example.demo.dto.ResponsePostDto;
-import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import lombok.experimental.SuperBuilder;
-import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.Where;
 
 import java.util.Date;
 
 @DynamicInsert
 @SuperBuilder
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Setter
 @Getter
+@Where(clause = "use_yn = 'Y'")
 @Entity(name = "post")
 @Table(name = "post")
 public class PostEntity {

@@ -1,15 +1,12 @@
 package com.example.demo.dto;
 
 import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.experimental.SuperBuilder;
+import lombok.Data;
 
 import java.util.Date;
 
-@Getter
-@Setter
 @Builder
+@Data
 public class ResponsePostDto {
     private long postId;
     private String title;

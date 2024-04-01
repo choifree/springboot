@@ -7,6 +7,7 @@ import com.example.demo.dto.ResultDto;
 import com.example.demo.entity.PostEntity;
 import com.example.demo.repository.PostRepository;
 import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -15,16 +16,21 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.*;
 import java.util.stream.Collectors;
 
+import static java.util.Collections.emptyList;
+
 @Service
 @RequiredArgsConstructor
 public class PostService {
     private final PostRepository postRepository;
+    private final ModelMapper modelMapper;
 
     public ResultDto getPosts() {
-        List<ResponsePostDto> postList = postRepository.findUsingPost("Y")
-                                                            .stream()
-                                                            .map(PostEntity::toResponsePostDto)
-                                                            .collect(Collectors.toList());
+        List<PostEntity> entity = postRepository.findUsingPost("Y");
+        List<ResponsePostDto> postList = entity.stream()
+                .map(data -> modelMapper.map(data, ResponsePostDto.class))
+                .collect(Collectors.toList());
+
+        if (postList == null) Collections.<ResponsePostDto>emptyList();
 
         ResultDto result = ResultDto
                                 .builder()
