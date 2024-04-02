@@ -1,6 +1,6 @@
-package com.example.demo.repository.custom;
+package com.example.demo.repository.post.custom;
 
-import com.example.demo.entity.PostEntity;
+import com.example.demo.entity.post.PostEntity;
 import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;

@@ -1,6 +1,6 @@
-package com.example.demo.entity;
+package com.example.demo.entity.post;
 
-import com.example.demo.dto.ResponsePostDto;
+import com.example.demo.dto.post.ResponsePostDto;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;

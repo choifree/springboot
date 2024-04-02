@@ -1,32 +1,28 @@
-package com.example.demo.controller;
+package com.example.demo.controller.post;
 
-import com.example.demo.dto.RequestPostDto;
-import com.example.demo.dto.ResponseDto;
-import com.example.demo.entity.PostEntity;
-import com.example.demo.service.PostService;
+import com.example.demo.dto.post.RequestPostDto;
+import com.example.demo.service.post.PostService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 @CrossOrigin(origins = "*")
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/v1/post")
-public class PostController extends BaseController {
+public class PostController {
 
     private final PostService postService;
 
     @GetMapping("/getPosts")
     public ResponseEntity<?> getPosts() {
-        return new ResponseEntity<>(postService.getPosts(), HttpStatus.OK);
+        return this.postService.getPosts();
     }
 
     @GetMapping("/getPostById/{id}")
     public ResponseEntity<?> getPostById(@PathVariable("id") Long id) {
-        return new ResponseEntity<>(postService.getPostById(id), null, HttpStatus.OK);
+        return this.postService.getPostById(id);
     }
 
     @PostMapping("/writePost")
