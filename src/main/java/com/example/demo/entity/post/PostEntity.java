@@ -4,6 +4,7 @@ import com.example.demo.dto.post.ResponsePostDto;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
+import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.Where;
 
@@ -30,23 +31,15 @@ public class PostEntity {
     @Column(nullable = false, columnDefinition = "TEXT")
     private String content;
 
-    @Column(name = "use_yn", columnDefinition = "CHAR")
+    @Column(name = "use_yn", columnDefinition = "CHAR default 'Y'")
     private String useYn;
 
+    @CreationTimestamp
     @Temporal(TemporalType.TIMESTAMP)
     private Date created;
 
+    @CreationTimestamp
     @Temporal(TemporalType.TIMESTAMP)
     private Date modified;
 
-    public ResponsePostDto toResponsePostDto() {
-        return ResponsePostDto.builder()
-                .postId(postId)
-                .title(title)
-                .content(content)
-                .useYn(useYn)
-                .created(created)
-                .modified(modified)
-                .build();
-    }
 }

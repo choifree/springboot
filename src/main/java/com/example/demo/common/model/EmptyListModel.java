@@ -5,13 +5,14 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class NoDataModel {
+public class EmptyListModel<T> {
     private String successOrNot;
     private String statusCode;
+    private T data;
 
-
-    public NoDataModel(String successOrNot, String statusCode) {
+    public EmptyListModel(String successOrNot, String statusCode, T data) {
         this.successOrNot = successOrNot;
         this.statusCode = statusCode;
+        this.data = data;
     }
 }

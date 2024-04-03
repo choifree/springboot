@@ -15,21 +15,38 @@ public class PostController {
 
     private final PostService postService;
 
+
+    /**
+     * 전체 게시글 조회
+     */
     @GetMapping("/getPosts")
     public ResponseEntity<?> getPosts() {
         return this.postService.getPosts();
     }
 
+    /**
+     * 특정 게시글 조회
+     * @param id
+     */
     @GetMapping("/getPostById/{id}")
     public ResponseEntity<?> getPostById(@PathVariable("id") Long id) {
         return this.postService.getPostById(id);
     }
 
+    /**
+     * 게시글 작성
+     * @param requestPostDto
+     */
     @PostMapping("/writePost")
     public ResponseEntity<?> writePost(@RequestBody RequestPostDto requestPostDto) {
-        return new ResponseEntity<>(postService.writePost(requestPostDto), null, HttpStatus.OK);
+        return this.postService.writePost(requestPostDto);
     }
 
+
+    /**
+     * health check api
+     *
+     */
     @GetMapping("/health")
     public String health() {
         return "** health check post controller **";
