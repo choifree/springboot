@@ -6,6 +6,7 @@ import lombok.*;
 import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.Where;
 
 import java.util.Date;
@@ -25,10 +26,9 @@ public class PostEntity {
     @Column(name = "post_id", columnDefinition = "INT UNSIGNED NOT NULL")
     private long postId;
 
-    @Column(nullable = false)
     private String title;
 
-    @Column(nullable = false, columnDefinition = "TEXT")
+    @Column(columnDefinition = "TEXT")
     private String content;
 
     @Column(name = "use_yn", columnDefinition = "CHAR default 'Y'")
@@ -38,8 +38,10 @@ public class PostEntity {
     @Temporal(TemporalType.TIMESTAMP)
     private Date created;
 
-    @CreationTimestamp
     @Temporal(TemporalType.TIMESTAMP)
     private Date modified;
+
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date deleted;
 
 }

@@ -11,10 +11,8 @@ import java.util.HashMap;
 
 public class CommonResponse {
 
-    public ResponseEntity<?> success(Object body, String responseObjectName) {
-        HashMap<String, Object> returnMap = new HashMap<>();
-        returnMap.put(responseObjectName, body);
-        SuccessModel successModel = new SuccessModel<>(SUCCESS.getDescription(), OK.getDescription(), returnMap);
+    public ResponseEntity<?> success(Object body) {
+        SuccessModel successModel = new SuccessModel<>(SUCCESS.getDescription(), OK.getDescription(), body);
         return ResponseEntity.status(200).body(successModel);
     }
 
@@ -23,9 +21,7 @@ public class CommonResponse {
         return ResponseEntity.status(200).body(noDataModel);
     }
 
-    public ResponseEntity<?> emptyList(Object body, String responseEmptyListName) {
-        HashMap<String, Object> returnMap = new HashMap<>();
-        returnMap.put(responseEmptyListName, body);
+    public ResponseEntity<?> emptyList(Object body) {
         EmptyListModel emptyListModel = new EmptyListModel<>(SUCCESS.getDescription(), NO_DATA.getDescription(), body);
         return ResponseEntity.status(200).body(emptyListModel);
     }
